@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BohemianRhapsody.Api.Interfaces
 {
-    interface IMusicData
+    public interface IMusicData
     {
         IEnumerable<Genre> GenreGetAll();
         Genre GenreGetById(int Id);

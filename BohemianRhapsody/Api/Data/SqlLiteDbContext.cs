@@ -14,7 +14,7 @@ namespace BohemianRhapsody.Api.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlite("Data Source=blogging.db");
+            optionsBuilder.UseSqlite("Data Source=Music.db");
 
         }
 

@@ -1,0 +1,39 @@
+<h1>Genres</h1>
+
+<p>The current collection of song genres in the database.</p>
+<button class="btn btn-primary btn-block"
+        (click)="onDeleteClick(i)">
+  Add a genre
+</button>
+
+<p *ngIf="!genres"><em>Loading...</em></p>
+
+<table class='table' *ngIf="genres; let i = index">
+  <thead>
+    <tr>
+      <th>GenreId</th>
+      <th>GenreName</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let genre of genres">
+      <td>{{ genre.genreId }}</td>
+      <td>{{ genre.genreName }}</td>
+      <td>
+        <button class="btn btn-info"
+                (click)="onViewClick(i)">
+          View
+        </button>
+        <button class="btn btn-warning"
+                (click)="onEditClick(i)">
+          Edit
+        </button>
+        <button class="btn btn-danger"
+                (click)="onDeleteClick(i)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

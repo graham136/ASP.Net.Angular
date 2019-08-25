@@ -1,3 +1,5 @@
+using BohemianRhapsody.Api.Data;
+using BohemianRhapsody.Api.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
@@ -29,6 +31,8 @@ namespace BohemianRhapsody
             });
 
             services.AddMvcCore().AddJsonFormatters();
+            services.AddEntityFrameworkSqlite().AddDbContext<SqlLiteDbContext>();
+            services.AddSingleton < IMusicData, SqlLiteData > ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +71,11 @@ namespace BohemianRhapsody
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            using (var client = new SqlLiteDbContext())
+            {
+                client.Database.EnsureCreated();
+            }
         }
     }
 }
