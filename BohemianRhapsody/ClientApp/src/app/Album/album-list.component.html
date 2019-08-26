@@ -1,0 +1,44 @@
+<h1>Albums</h1>
+
+<p>The current collection of song albums in the database.</p>
+
+
+<p *ngIf="!albums"><em>Loading...</em></p>
+
+<table class='table' *ngIf="albums">
+  <thead>
+    <tr>
+      <th>AlbumId</th>
+      <th>AlbumName</th>
+      <th>ArtistId</th>
+      <th>ArtistName</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let album of albums; let i = index">
+      <td>{{ album.albumId }}</td>
+      <td>{{ album.albumName }}</td>
+      <td>{{ album.artistId }}</td>
+      <td>{{ album.artistName }}</td>
+      <td>
+        <button class="btn btn-info"
+                (click)="onViewClick(i)">
+          View
+        </button>
+        <button class="btn btn-warning"
+                (click)="onEditClick(i)">
+          Edit
+        </button>
+        <button class="btn btn-danger"
+                (click)="onDeleteClick(i)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-success"
+        (click)="onAddClick()">
+  Add a album
+</button>

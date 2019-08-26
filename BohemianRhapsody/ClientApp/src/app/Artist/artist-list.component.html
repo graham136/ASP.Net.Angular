@@ -1,0 +1,40 @@
+<h1>Artists</h1>
+
+<p>The current collection of song artists in the database.</p>
+
+
+<p *ngIf="!artists"><em>Loading...</em></p>
+
+<table class='table' *ngIf="artists">
+  <thead>
+    <tr>
+      <th>ArtistId</th>
+      <th>ArtistName</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let artist of artists; let i = index">
+      <td>{{ artist.artistId }}</td>
+      <td>{{ artist.artistName }}</td>
+      <td>
+        <button class="btn btn-info"
+                (click)="onViewClick(i)">
+          View
+        </button>
+        <button class="btn btn-warning"
+                (click)="onEditClick(i)">
+          Edit
+        </button>
+        <button class="btn btn-danger"
+                (click)="onDeleteClick(i)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-success"
+        (click)="onAddClick()">
+  Add a artist
+</button>

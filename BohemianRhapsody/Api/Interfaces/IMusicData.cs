@@ -15,5 +15,19 @@ namespace BohemianRhapsody.Api.Interfaces
         Genre GenreAddItem(Genre addedGenre);
         Genre GenreDeleteItem(int Id);
         bool GenreCanDeleteItem(int Id);
+
+        IEnumerable<Artist> ArtistGetAllItems();
+        Artist ArtistGetById(int Id);
+        Artist ArtistUpdateItem(Artist updatedArtist);
+        Artist ArtistAddItem(Artist addedArtist);
+        Artist ArtistDeleteItem(int Id);
+        bool ArtistCanDeleteItem(int Id);
+
+        IEnumerable<Album> AlbumGetAllItems();
+        Album AlbumGetById(int Id);
+        Album AlbumUpdateItem(Album updatedAlbum);
+        Album AlbumAddItem(Album addedAlbum);
+        Album AlbumDeleteItem(int Id);
+        bool AlbumCanDeleteItem(int Id);
     }
 }

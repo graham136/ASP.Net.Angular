@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BohemianRhapsody.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class SqlLiteController: Controller
+    public class GenreController: Controller
     {
 
         IEnumerable<Genre> Genres;
@@ -19,7 +19,7 @@ namespace BohemianRhapsody.Api.Controllers
         /// Constructor 
         /// </summary>
         /// <param name="SqlLiteData">Controller that implements IMusicData api calls for Sqlite Database </param>
-        public SqlLiteController(IMusicData SqlLiteData)
+        public GenreController(IMusicData SqlLiteData)
         {
             _sqlLiteData = SqlLiteData;
             Genres = _sqlLiteData.GenreGetAllItems();

@@ -1,0 +1,26 @@
+<h1>Artist</h1>
+
+<p>Add a new artist</p>
+<p *ngIf="!artist"><em>Loading...</em></p>
+
+<div *ngIf="artist">
+  <form [formGroup]="myForm">
+    <h2>Add Artist</h2>
+    <div class="form-group">
+      <label for="artistName">Artist Name:</label>
+      <input type="text" class="form-control" id="artistName" formControlName="artistName" value="{{ artist.artistName }}">
+      <ng-template [ngIf]="!myForm.controls.artistName.valid">
+        Please enter a Artist name?
+      </ng-template>
+    </div>
+    <button class="btn btn-primary"
+            (click)="onBackClick()">
+      Back to Artists
+    </button>
+    <button class="btn btn-success"
+            (click)="onSaveClick()"
+            [disabled]="!myForm.valid">
+      Save to Artists
+    </button>
+  </form>
+</div>
