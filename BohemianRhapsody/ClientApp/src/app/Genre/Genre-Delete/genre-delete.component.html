@@ -1,0 +1,25 @@
+<h1>Genre</h1>
+
+<div *ngIf="!genreDelete">
+  <p>Cannot delete genre {{genre.genreName}} as it is still in use in a song.</p>
+  <button class="btn btn-primary"
+          (click)="onBackClick()">
+    Back to Genres
+  </button>
+</div>
+
+<div *ngIf="genreDelete">
+  <h2>Delete Genre?:</h2>
+  <div class="form-group">
+    <label for="genreName">Genre Name:</label>
+    <input type="text" class="form-control" id="genreName" value="{{ genre.genreName }}" disabled>
+  </div>
+  <button class="btn btn-primary"
+          (click)="onBackClick()">
+    Back to Genres
+  </button>
+  <button class="btn btn-danger"
+          (click)="onDeleteClick()">
+    Delete Genre
+  </button>
+</div>

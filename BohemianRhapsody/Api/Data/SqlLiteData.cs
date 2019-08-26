@@ -15,6 +15,9 @@ namespace BohemianRhapsody.Api.Data
         public IEnumerable<Genre> Genres;
         private SqlLiteDbContext _sqlLiteDbContext;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public SqlLiteData()
         {
             _sqlLiteDbContext = new SqlLiteDbContext();
@@ -22,14 +25,19 @@ namespace BohemianRhapsody.Api.Data
 
             if (!Genres.Any())
             {
-                GenreAdd(new Genre { GenreName = "Rock" });
+                GenreAddItem(new Genre { GenreName = "Rock" });
             }
 
         }
 
-        public Genre GenreAdd(Genre addedGenre)
+        /// <summary>
+        /// To add a genre
+        /// </summary>
+        /// <param name="addedGenre"> genre to add </param>
+        /// <returns></returns>
+        public Genre GenreAddItem(Genre addedGenre)
         {
-            var result = _sqlLiteDbContext.Genres.First(genre => genre.GenreName == addedGenre.GenreName);
+            var result = _sqlLiteDbContext.Genres.FirstOrDefault(genre => genre.GenreName == addedGenre.GenreName);
             if (result == null)
             {
                 _sqlLiteDbContext.Genres.Add(addedGenre);
@@ -44,7 +52,12 @@ namespace BohemianRhapsody.Api.Data
 
         }
 
-        public Genre GenreDelete(int Id)
+        /// <summary>
+        /// To delete a genre
+        /// </summary>
+        /// <param name="Id"> id of genre to delete </param>
+        /// <returns></returns>
+        public Genre GenreDeleteItem(int Id)
         {
             var tempGenre = _sqlLiteDbContext.Genres.First(genre => genre.GenreId == Id);
             if (tempGenre != null)
@@ -59,23 +72,39 @@ namespace BohemianRhapsody.Api.Data
             }
         }
 
-        public IEnumerable<Genre> GenreGetAll()
+        /// <summary>
+        /// Get all the genres in the database
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Genre> GenreGetAllItems()
         {
             return _sqlLiteDbContext.Genres;
         }
 
+        /// <summary>
+        /// Get a genre by id
+        /// </summary>
+        /// <param name="Id"> id of genre to be found</param>
+        /// <returns></returns>
         public Genre GenreGetById(int Id)
         {
             var result = _sqlLiteDbContext.Genres.First(genre => genre.GenreId == Id);
             return result;
         }
 
-        public Genre GenreUpdate(Genre updatedGenre)
+        /// <summary>
+        /// Update a genre 
+        /// </summary>
+        /// <param name="updatedGenre"> genre to be updated to </param>
+        /// <returns></returns>
+        public Genre GenreUpdateItem(Genre updatedGenre)
         {
             var result = _sqlLiteDbContext.Genres.First(genre => genre.GenreId == updatedGenre.GenreId);
             if (result != null)
             {
-                _sqlLiteDbContext.Genres.Update(updatedGenre);
+
+                result.GenreName = updatedGenre.GenreName;
+                _sqlLiteDbContext.Genres.Update(result);
                 _sqlLiteDbContext.SaveChanges();
                 var tempGenre = _sqlLiteDbContext.Genres.First(genre => genre.GenreId == updatedGenre.GenreId);
                 return tempGenre;
@@ -84,6 +113,17 @@ namespace BohemianRhapsody.Api.Data
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Tests if the genre can be deleted
+        /// </summary>
+        /// <param name="Id"> id of genre deleted </param>
+        /// <returns></returns>
+        public bool GenreCanDeleteItem(int Id)
+        {
+            var result = false;
+            return result;
         }
     }
 }

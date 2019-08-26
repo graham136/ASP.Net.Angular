@@ -9,10 +9,11 @@ namespace BohemianRhapsody.Api.Interfaces
 {
     public interface IMusicData
     {
-        IEnumerable<Genre> GenreGetAll();
+        IEnumerable<Genre> GenreGetAllItems();
         Genre GenreGetById(int Id);
-        Genre GenreUpdate(Genre updatedGenre);
-        Genre GenreAdd(Genre addedGenre);
-        Genre GenreDelete(int Id);
+        Genre GenreUpdateItem(Genre updatedGenre);
+        Genre GenreAddItem(Genre addedGenre);
+        Genre GenreDeleteItem(int Id);
+        bool GenreCanDeleteItem(int Id);
     }
 }

@@ -1,0 +1,18 @@
+<h1>Genre</h1>
+
+<p>Viewing a selected genre</p>
+
+
+<p *ngIf="!genre"><em>Loading...</em></p>
+
+<div *ngIf="genre">
+  <h2>View Genre</h2>
+  <div class="form-group">
+    <label for="genreName">Genre Name:</label>
+    <input type="text" class="form-control" id="genreName" value="{{ genre.genreName }}" disabled>
+  </div>
+  <button class="btn btn-primary"
+          (click)="onBackClick()">
+    Back to Genres
+  </button>
+</div>

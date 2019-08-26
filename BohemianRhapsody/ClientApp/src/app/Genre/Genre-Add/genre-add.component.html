@@ -1,0 +1,26 @@
+<h1>Genre</h1>
+
+<p>Add a new genre</p>
+<p *ngIf="!genre"><em>Loading...</em></p>
+
+<div *ngIf="genre">
+  <form [formGroup]="myForm">
+    <h2>Add Genre</h2>
+    <div class="form-group">
+      <label for="genreName">Genre Name:</label>
+      <input type="text" class="form-control" id="genreName" formControlName="genreName" value="{{ genre.genreName }}">
+      <ng-template [ngIf]="!myForm.controls.genreName.valid">
+        Please enter a Genre name?
+      </ng-template>
+    </div>
+    <button class="btn btn-primary"
+            (click)="onBackClick()">
+      Back to Genres
+    </button>
+    <button class="btn btn-success"
+            (click)="onSaveClick()"
+            [disabled]="!myForm.valid">
+      Save to Genres
+    </button>
+  </form>
+</div>
