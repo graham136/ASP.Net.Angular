@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 // Model Imports
 import { Song } from 'Models/Song';
@@ -14,10 +16,13 @@ import { SongService } from 'Services/song.service';
 })
 export class SongListComponent {
   public songs: Song[];
+  myForm = new FormGroup({});
+  public searchString: string;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     public songService: SongService,
-    public router: Router) {
+    public router: Router,
+    public formBuilder: FormBuilder) {
 
     /*
      *Standard Api Call abstracted to service layer Song Service which calls Song Http Service which does the call.
@@ -32,6 +37,11 @@ export class SongListComponent {
       (result: Song[]) => {
         this.songs = result;
       });
+
+    this.myForm = formBuilder.group({
+      'songName': ['', [Validators.required]],
+      
+    });
   }
 
   // Function to route to view song detail page
@@ -55,6 +65,29 @@ export class SongListComponent {
   // Function to route to add song detail page
   onAddClick() {
     this.router.navigateByUrl('/song-add');
+  }
+
+  // Function to search for a song
+  onSearchClick() {
+    this.searchString = this.myForm.controls.songName.value;
+    this.searchString = this.searchString.toLowerCase();
+    this.songService.GetAllSongs().subscribe(
+      (result: Song[]) => {
+        this.songs = result;        
+        this.songs.forEach((item) => {          
+          if (!item.songName.toLowerCase().startsWith(this.searchString)) {
+            this.songs = this.songs.filter(song => item.songId != song.songId);           
+          }
+        });        
+      });
+  }
+
+  // Function to refresh a search
+  onRefreshClick() {
+    this.songService.GetAllSongs().subscribe(
+      (result: Song[]) => {
+        this.songs = result;        
+      });
   }
    
 }

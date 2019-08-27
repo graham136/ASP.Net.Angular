@@ -1,7 +1,22 @@
 <h1>Albums</h1>
 
 <p>The current collection of song albums in the database.</p>
-
+<h3>Search</h3>
+<form [formGroup]="myForm">
+  <div class="form-group">
+    <label for="albumName">Album Name:</label>
+    <input type="text" class="form-control" id="albumName" formControlName="albumName">
+    <ng-template [ngIf]="!myForm.controls.albumName.valid">
+      Please enter a Album name to search?
+    </ng-template>
+  </div>
+  <button type="button" class="btn btn-info" (click)="onSearchClick()">
+    <span class="glyphicon glyphicon-search"></span> Search
+  </button>
+  <button type="button" class="btn btn-info" (click)="onRefreshClick()">
+    <span class="glyphicon glyphicon-refresh"></span> Reset Search
+  </button>
+</form>
 
 <p *ngIf="!albums"><em>Loading...</em></p>
 

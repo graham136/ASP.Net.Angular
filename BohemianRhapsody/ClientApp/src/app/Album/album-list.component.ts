@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // Model Imports
 import { Album } from 'Models/Album';
@@ -14,10 +15,13 @@ import { AlbumService } from 'Services/album.service';
 })
 export class AlbumListComponent {
   public albums: Album[];
+  myForm = new FormGroup({});
+  public searchString: string;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     public albumService: AlbumService,
-    public router: Router) {
+    public router: Router,
+    public formBuilder: FormBuilder) {
 
     /*
      *Standard Api Call abstracted to service layer Album Service which calls Album Http Service which does the call.
@@ -32,6 +36,11 @@ export class AlbumListComponent {
       (result: Album[]) => {
         this.albums = result;
       });
+
+    this.myForm = formBuilder.group({
+      'albumName': ['', [Validators.required]],
+
+    });
   }
 
   // Function to route to view album detail page
@@ -55,6 +64,29 @@ export class AlbumListComponent {
   // Function to route to add album detail page
   onAddClick() {
     this.router.navigateByUrl('/album-add');
+  }
+
+  // Function to search for a album
+  onSearchClick() {
+    this.searchString = this.myForm.controls.albumName.value;
+    this.searchString = this.searchString.toLowerCase();
+    this.albumService.GetAllAlbums().subscribe(
+      (result: Album[]) => {
+        this.albums = result;
+        this.albums.forEach((item) => {
+          if (!item.albumName.toLowerCase().startsWith(this.searchString)) {
+            this.albums = this.albums.filter(album => item.albumId != album.albumId);
+          }
+        });
+      });
+  }
+
+  // Function to refresh a search
+  onRefreshClick() {
+    this.albumService.GetAllAlbums().subscribe(
+      (result: Album[]) => {
+        this.albums = result;
+      });
   }
    
 }

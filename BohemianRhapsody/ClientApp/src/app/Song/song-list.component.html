@@ -1,7 +1,22 @@
 <h1>Songs</h1>
 
 <p>The current collection of song songs in the database.</p>
-
+<h3>Search</h3>
+<form [formGroup]="myForm">
+  <div class="form-group">
+    <label for="songName">Song Name:</label>
+    <input type="text" class="form-control" id="songName" formControlName="songName">
+    <ng-template [ngIf]="!myForm.controls.songName.valid">
+      Please enter a Song name to search?
+    </ng-template>
+  </div>
+  <button type="button" class="btn btn-info" (click)="onSearchClick()">
+    <span class="glyphicon glyphicon-search"></span> Search
+  </button>
+  <button type="button" class="btn btn-info" (click)="onRefreshClick()">
+    <span class="glyphicon glyphicon-refresh"></span> Reset Search
+  </button>
+</form>
 
 <p *ngIf="!songs"><em>Loading...</em></p>
 

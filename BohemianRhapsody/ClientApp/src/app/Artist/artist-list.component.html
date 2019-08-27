@@ -1,7 +1,22 @@
 <h1>Artists</h1>
 
 <p>The current collection of song artists in the database.</p>
-
+<h3>Search</h3>
+<form [formGroup]="myForm">
+  <div class="form-group">
+    <label for="artistName">Artist Name:</label>
+    <input type="text" class="form-control" id="artistName" formControlName="artistName">
+    <ng-template [ngIf]="!myForm.controls.artistName.valid">
+      Please enter a Artist name to search?
+    </ng-template>
+  </div>
+  <button type="button" class="btn btn-info" (click)="onSearchClick()">
+    <span class="glyphicon glyphicon-search"></span> Search
+  </button>
+  <button type="button" class="btn btn-info" (click)="onRefreshClick()">
+    <span class="glyphicon glyphicon-refresh"></span> Reset Search
+  </button>
+</form>
 
 <p *ngIf="!artists"><em>Loading...</em></p>
 
@@ -16,7 +31,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let artist of artists; let i = index">
-      <td><img src="{{ artist.artistUrl }}" ></td>
+      <td><img src="{{ artist.artistUrl }}"></td>
       <td>{{ artist.artistId }}</td>
       <td>{{ artist.artistName }}</td>
       <td>
