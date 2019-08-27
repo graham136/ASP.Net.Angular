@@ -11,6 +11,8 @@ namespace BohemianRhapsody.Api.Models
         [Key]
         public int ArtistId { get; set; }
         [Required]
-        public string ArtistName { get; set; }        
+        public string ArtistName { get; set; }  
+        [Required]
+        public string ArtistUrl { get; set; }
     }
 }

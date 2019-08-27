@@ -1,0 +1,54 @@
+<h1>Songs</h1>
+
+<p>The current collection of song songs in the database.</p>
+
+
+<p *ngIf="!songs"><em>Loading...</em></p>
+
+<div class="table-responsive">
+  <table class='table' *ngIf="songs">
+    <thead>
+      <tr>
+        <th>SongId</th>
+        <th>SongName</th>
+        <th>ArtistId</th>
+        <th>ArtistName</th>
+        <th>AlbumId</th>
+        <th>AlbumName</th>
+        <th>GenreId</th>
+        <th>GenreName</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let song of songs; let i = index">
+        <td>{{ song.songId }}</td>
+        <td>{{ song.songName }}</td>
+        <td>{{ song.artistId }}</td>
+        <td>{{ song.artistName }}</td>
+        <td>{{ song.albumId }}</td>
+        <td>{{ song.albumName }}</td>
+        <td>{{ song.genreId }}</td>
+        <td>{{ song.genreName }}</td>
+        <td>
+          <button class="btn btn-info"
+                  (click)="onViewClick(i)">
+            View
+          </button>
+          <button class="btn btn-warning"
+                  (click)="onEditClick(i)">
+            Edit
+          </button>
+          <button class="btn btn-danger"
+                  (click)="onDeleteClick(i)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<button class="btn btn-success"
+        (click)="onAddClick()">
+  Add a song
+</button>

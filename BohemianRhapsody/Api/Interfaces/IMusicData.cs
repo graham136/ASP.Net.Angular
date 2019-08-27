@@ -29,5 +29,12 @@ namespace BohemianRhapsody.Api.Interfaces
         Album AlbumAddItem(Album addedAlbum);
         Album AlbumDeleteItem(int Id);
         bool AlbumCanDeleteItem(int Id);
+
+        IEnumerable<Song> SongGetAllItems();
+        Song SongGetById(int Id);
+        Song SongUpdateItem(Song updatedSong);
+        Song SongAddItem(Song addedSong);
+        Song SongDeleteItem(int Id);
+        bool SongCanDeleteItem(int Id);
     }
 }

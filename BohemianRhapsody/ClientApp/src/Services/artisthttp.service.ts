@@ -35,6 +35,19 @@ export class ArtistHttpService {
   }
 
   /**
+   * Function to retrieve list of pre-added artist pictures. Obviously this can be expanded.
+   * */
+  ArtistPictureList() {
+    this.endPoint = this.baseUrl + this.artistRoute + 'ArtistGetPictures';
+    return this.httpClient.get<string[]>(this.endPoint, { observe: 'response' })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  /**
    * Function to add an artist to the api
    * @param _artist The artist to be added
    */
@@ -88,7 +101,7 @@ export class ArtistHttpService {
    */
   ArtistCanDelete(_artistId: number) {
     this.endPoint = this.baseUrl + this.artistRoute + 'ArtistCanDeleteItem?Id=' + _artistId;
-    return this.httpClient.delete<boolean>(this.endPoint, { observe: 'response' })
+    return this.httpClient.get<boolean>(this.endPoint, { observe: 'response' })
       .pipe(
         map(response => {
           if (response.status === 200) {

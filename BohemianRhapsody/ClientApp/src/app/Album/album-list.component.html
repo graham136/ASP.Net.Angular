@@ -10,6 +10,7 @@
     <tr>
       <th>AlbumId</th>
       <th>AlbumName</th>
+      <th>Picture</th>
       <th>ArtistId</th>
       <th>ArtistName</th>
       <th>Action</th>
@@ -19,6 +20,7 @@
     <tr *ngFor="let album of albums; let i = index">
       <td>{{ album.albumId }}</td>
       <td>{{ album.albumName }}</td>
+      <td><img src="{{ album.albumUrl }}" /></td>
       <td>{{ album.artistId }}</td>
       <td>{{ album.artistName }}</td>
       <td>

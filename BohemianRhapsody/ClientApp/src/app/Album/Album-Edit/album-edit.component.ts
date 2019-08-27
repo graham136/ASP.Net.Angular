@@ -19,8 +19,11 @@ export class AlbumEditComponent {
   public albums: Album[];
   public artists: Artist[];
   public album: Album;
+  public albumPictures: string[];
+  public tempUrl: string;
   public tempAlbum: string;
   public tempArtist: Artist;
+  public selectedAlbum: string;
 
   myForm = new FormGroup({});
 
@@ -35,23 +38,30 @@ export class AlbumEditComponent {
     artistService.GetAllArtists().subscribe(
       (result: Artist[]) => {
         this.artists = result;
+        albumService.GetAllAlbumPictures().subscribe(
+          (result: string[]) => {
+            this.albumPictures = result;
+          });
       });
 
     this.tempArtist = new Artist();
     this.tempArtist.artistId = this.album.artistId;
     this.tempArtist.artistName = this.album.artistName;
+    this.tempUrl = this.album.albumUrl;
+    this.selectedAlbum = this.tempUrl;
     
     this.myForm = formBuilder.group({
       'albumName': [this.album.albumName, [Validators.required]],
-      'artistName': [this.tempArtist.artistName, [Validators.required]]
+      'artistName': [this.album.artistName, [Validators.required]],
+      'albumPicture': [this.tempUrl, [Validators.required]]
     });
 
-
-    this.myForm.controls.artistName.setValue(this.tempArtist.artistName);
-    
-    
   }
 
+  // On url change
+  onUrlChange() {
+    this.selectedAlbum = this.myForm.controls.albumPicture.value;
+  }
   // Function to route back to album without save edited album
   onBackClick() {
     this.router.navigateByUrl('/album-list');
@@ -66,6 +76,7 @@ export class AlbumEditComponent {
     this.album.albumName = this.tempAlbum;
     this.album.artistName = this.tempArtist.artistName;
     this.album.artistId = this.tempArtist.artistId;
+    this.album.albumUrl = this.myForm.controls.albumPicture.value;
     
     this.albumService.AlbumUpdateItem(this.album).subscribe(
       (result: Album) => {

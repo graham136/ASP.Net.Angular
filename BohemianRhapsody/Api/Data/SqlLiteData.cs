@@ -15,6 +15,7 @@ namespace BohemianRhapsody.Api.Data
         public IEnumerable<Genre> Genres;
         public IEnumerable<Artist> Artists;
         public IEnumerable<Album> Albums;
+        public IEnumerable<Song> Songs;
 
         private SqlLiteDbContext _sqlLiteDbContext;
 
@@ -27,20 +28,26 @@ namespace BohemianRhapsody.Api.Data
             Genres = _sqlLiteDbContext.Genres;
             Artists = _sqlLiteDbContext.Artists;
             Albums = _sqlLiteDbContext.Albums;
+            Songs = _sqlLiteDbContext.Songs;
 
             if (!Genres.Any())
             {
-                GenreAddItem(new Genre { GenreName = "Rock", GenreId=0 });
+                GenreAddItem(new Genre { GenreName = "Rock", GenreId=1 });
             }
 
             if (!Artists.Any())
             {
-                ArtistAddItem(new Artist { ArtistName = "Bon Jovi", ArtistId=0 });
+                ArtistAddItem(new Artist { ArtistName = "Bon Jovi", ArtistId=1, ArtistUrl= "assets/Artist1.jpg" });
             }
 
             if (!Albums.Any())
             {
-                AlbumAddItem(new Album { AlbumName = "Its my life", ArtistName="Bon Jovi", AlbumId=0, ArtistId=0 });
+                AlbumAddItem(new Album { AlbumName = "Its my life", ArtistName="Bon Jovi", AlbumUrl="assets/Album1.jpg",AlbumId=1, ArtistId=1 });
+            }
+
+            if (!Songs.Any())
+            {
+                SongAddItem(new Song { AlbumName = "Its my life", ArtistName = "Bon Jovi", GenreName="Rock", SongName="Living on a prayer",GenreId=1, SongId=1, AlbumId = 1, ArtistId = 1 });
             }
 
         }
@@ -141,8 +148,15 @@ namespace BohemianRhapsody.Api.Data
         /// <returns></returns>
         public bool GenreCanDeleteItem(int Id)
         {
-            var result = false;
-            return result;
+            var result = _sqlLiteDbContext.Songs.FirstOrDefault(song => song.GenreId == Id);
+            if(result==null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion
@@ -152,7 +166,7 @@ namespace BohemianRhapsody.Api.Data
         //***************************************************************************************Artists *****************************************************************
 
         /// <summary>
-        /// Get all the artists in the database
+        /// Get all the albums in the database
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Artist> ArtistGetAllItems()
@@ -225,6 +239,7 @@ namespace BohemianRhapsody.Api.Data
             {
 
                 result.ArtistName = updatedArtist.ArtistName;
+                result.ArtistUrl = updatedArtist.ArtistUrl;
                 _sqlLiteDbContext.Artists.Update(result);
                 _sqlLiteDbContext.SaveChanges();
                 var tempArtist = _sqlLiteDbContext.Artists.First(artist => artist.ArtistId == updatedArtist.ArtistId);
@@ -243,8 +258,15 @@ namespace BohemianRhapsody.Api.Data
         /// <returns></returns>
         public bool ArtistCanDeleteItem(int Id)
         {
-            var result = false;
-            return result;
+            var result = _sqlLiteDbContext.Songs.FirstOrDefault(song => song.ArtistId == Id);
+            if (result == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion
@@ -254,7 +276,7 @@ namespace BohemianRhapsody.Api.Data
         //***************************************************************************************Album *****************************************************************
 
         /// <summary>
-        /// Get all the artists in the database
+        /// Get all the album in the database
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Album> AlbumGetAllItems()
@@ -263,29 +285,29 @@ namespace BohemianRhapsody.Api.Data
         }
 
         /// <summary>
-        /// Get a artist by id
+        /// Get a album by id
         /// </summary>
-        /// <param name="Id"> id of artist to be found</param>
+        /// <param name="Id"> id of album to be found</param>
         /// <returns></returns>
         public Album AlbumGetById(int Id)
         {
-            var result = _sqlLiteDbContext.Albums.First(artist => artist.AlbumId == Id);
+            var result = _sqlLiteDbContext.Albums.First(album => album.AlbumId == Id);
             return result;
         }
 
         /// <summary>
-        /// To add a artist
+        /// To add a album
         /// </summary>
-        /// <param name="addedAlbum"> artist to add </param>
+        /// <param name="addedAlbum"> album to add </param>
         /// <returns></returns>
         public Album AlbumAddItem(Album addedAlbum)
         {
-            var result = _sqlLiteDbContext.Albums.FirstOrDefault(artist => artist.AlbumName == addedAlbum.AlbumName);
+            var result = _sqlLiteDbContext.Albums.FirstOrDefault(album => album.AlbumName == addedAlbum.AlbumName);
             if (result == null)
             {
                 _sqlLiteDbContext.Albums.Add(addedAlbum);
                 _sqlLiteDbContext.SaveChanges();
-                var tempAlbum = _sqlLiteDbContext.Albums.First(artist => artist.AlbumName == addedAlbum.AlbumName);
+                var tempAlbum = _sqlLiteDbContext.Albums.First(album => album.AlbumName == addedAlbum.AlbumName);
                 return tempAlbum;
             }
             else
@@ -296,13 +318,13 @@ namespace BohemianRhapsody.Api.Data
         }
 
         /// <summary>
-        /// To delete a artist
+        /// To delete a album
         /// </summary>
-        /// <param name="Id"> id of artist to delete </param>
+        /// <param name="Id"> id of album to delete </param>
         /// <returns></returns>
         public Album AlbumDeleteItem(int Id)
         {
-            var tempAlbum = _sqlLiteDbContext.Albums.First(artist => artist.AlbumId == Id);
+            var tempAlbum = _sqlLiteDbContext.Albums.First(album => album.AlbumId == Id);
             if (tempAlbum != null)
             {
                 _sqlLiteDbContext.Albums.Remove(tempAlbum);
@@ -316,21 +338,23 @@ namespace BohemianRhapsody.Api.Data
         }
 
         /// <summary>
-        /// Update a artist 
+        /// Update a album 
         /// </summary>
-        /// <param name="updatedAlbum"> artist to be updated to </param>
+        /// <param name="updatedAlbum"> album to be updated to </param>
         /// <returns></returns>
         public Album AlbumUpdateItem(Album updatedAlbum)
         {
-            var result = _sqlLiteDbContext.Albums.First(artist => artist.AlbumId == updatedAlbum.AlbumId);
+            var result = _sqlLiteDbContext.Albums.First(album => album.AlbumId == updatedAlbum.AlbumId);
             if (result != null)
             {
 
                 result.AlbumName = updatedAlbum.AlbumName;
                 result.ArtistName = updatedAlbum.ArtistName;
+                result.ArtistId = updatedAlbum.ArtistId;
+                result.AlbumUrl = updatedAlbum.AlbumUrl;
                 _sqlLiteDbContext.Albums.Update(result);
                 _sqlLiteDbContext.SaveChanges();
-                var tempAlbum = _sqlLiteDbContext.Albums.First(artist => artist.AlbumId == updatedAlbum.AlbumId);
+                var tempAlbum = _sqlLiteDbContext.Albums.First(album => album.AlbumId == updatedAlbum.AlbumId);
                 return tempAlbum;
             }
             else
@@ -340,13 +364,128 @@ namespace BohemianRhapsody.Api.Data
         }
 
         /// <summary>
-        /// Tests if the artist can be deleted
+        /// Tests if the album can be deleted
         /// </summary>
         /// <param name="Id"> id of genre deleted </param>
         /// <returns></returns>
         public bool AlbumCanDeleteItem(int Id)
         {
-            var result = false;
+            var result = _sqlLiteDbContext.Songs.FirstOrDefault(song => song.AlbumId == Id);
+            if (result == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Song
+
+        //***************************************************************************************Song *****************************************************************
+
+        /// <summary>
+        /// Get all the album in the database
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Song> SongGetAllItems()
+        {
+            return _sqlLiteDbContext.Songs;
+        }
+
+        /// <summary>
+        /// Get a album by id
+        /// </summary>
+        /// <param name="Id"> id of album to be found</param>
+        /// <returns></returns>
+        public Song SongGetById(int Id)
+        {
+            var result = _sqlLiteDbContext.Songs.First(album => album.SongId == Id);
+            return result;
+        }
+
+        /// <summary>
+        /// To add a album
+        /// </summary>
+        /// <param name="addedSong"> album to add </param>
+        /// <returns></returns>
+        public Song SongAddItem(Song addedSong)
+        {
+            var result = _sqlLiteDbContext.Songs.FirstOrDefault(album => album.SongName == addedSong.SongName);
+            if (result == null)
+            {
+                _sqlLiteDbContext.Songs.Add(addedSong);
+                _sqlLiteDbContext.SaveChanges();
+                var tempSong = _sqlLiteDbContext.Songs.First(album => album.SongName == addedSong.SongName);
+                return tempSong;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        /// <summary>
+        /// To delete a album
+        /// </summary>
+        /// <param name="Id"> id of album to delete </param>
+        /// <returns></returns>
+        public Song SongDeleteItem(int Id)
+        {
+            var tempSong = _sqlLiteDbContext.Songs.First(album => album.SongId == Id);
+            if (tempSong != null)
+            {
+                _sqlLiteDbContext.Songs.Remove(tempSong);
+                _sqlLiteDbContext.SaveChanges();
+                return tempSong;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update a album 
+        /// </summary>
+        /// <param name="updatedSong"> album to be updated to </param>
+        /// <returns></returns>
+        public Song SongUpdateItem(Song updatedSong)
+        {
+            var result = _sqlLiteDbContext.Songs.First(album => album.SongId == updatedSong.SongId);
+            if (result != null)
+            {
+
+                result.SongName = updatedSong.SongName;
+                result.ArtistName = updatedSong.ArtistName;
+                result.AlbumName = updatedSong.AlbumName;
+                result.GenreName = updatedSong.GenreName;
+                result.ArtistId = updatedSong.ArtistId;
+                result.GenreId = updatedSong.GenreId;
+                result.ArtistId = updatedSong.ArtistId;
+                _sqlLiteDbContext.Songs.Update(result);
+                _sqlLiteDbContext.SaveChanges();
+                var tempSong = _sqlLiteDbContext.Songs.First(album => album.SongId == updatedSong.SongId);
+                return tempSong;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Tests if the album can be deleted
+        /// </summary>
+        /// <param name="Id"> id of genre deleted </param>
+        /// <returns></returns>
+        public bool SongCanDeleteItem(int Id)
+        {
+            var result = true;
             return result;
         }
 

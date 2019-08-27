@@ -88,10 +88,11 @@ export class GenreHttpService {
    */
   GenreCanDelete(_genreId: number) {
     this.endPoint = this.baseUrl + this.genreRoute + 'GenreCanDeleteItem?Id=' + _genreId;
-    return this.httpClient.delete<boolean>(this.endPoint, { observe: 'response' })
+    return this.httpClient.get<boolean>(this.endPoint, { observe: 'response' })
       .pipe(
         map(response => {
           if (response.status === 200) {
+            console.log(response);
             return response.body;
           }
         })

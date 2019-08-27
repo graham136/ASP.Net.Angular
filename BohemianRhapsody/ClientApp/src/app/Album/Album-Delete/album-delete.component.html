@@ -1,6 +1,6 @@
 <h1>Album</h1>
 
-<div *ngIf="!albumDelete">
+<div *ngIf="!deleteAlbum">
   <p>Cannot delete album {{album.albumName}} as it is still in use in a song.</p>
   <button class="btn btn-primary"
           (click)="onBackClick()">
@@ -8,7 +8,7 @@
   </button>
 </div>
 
-<div *ngIf="albumDelete">
+<div *ngIf="deleteAlbum">
   <h2>Delete Album?:</h2>
   <div class="form-group">
     <label for="albumName">Album Name:</label>

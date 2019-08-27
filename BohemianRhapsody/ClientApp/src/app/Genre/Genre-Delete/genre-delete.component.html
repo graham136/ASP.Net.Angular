@@ -1,6 +1,6 @@
 <h1>Genre</h1>
 
-<div *ngIf="!genreDelete">
+<div *ngIf="!GenreDelete">
   <p>Cannot delete genre {{genre.genreName}} as it is still in use in a song.</p>
   <button class="btn btn-primary"
           (click)="onBackClick()">

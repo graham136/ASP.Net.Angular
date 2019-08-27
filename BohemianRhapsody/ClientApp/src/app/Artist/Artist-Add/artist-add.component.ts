@@ -17,6 +17,8 @@ export class ArtistAddComponent {
   public artists: Artist[];
   public artist: Artist;
   public tempArtist: string;
+  public selectedAlbum: string;
+  public artistPictures: string[];
 
   myForm = new FormGroup({});
 
@@ -26,9 +28,14 @@ export class ArtistAddComponent {
     public formBuilder: FormBuilder) {
 
     this.artist = new Artist();
+    artistService.GetAllArtistPictures().subscribe(
+      (result: string[]) => {
+        this.artistPictures = result;
+      });
 
     this.myForm = formBuilder.group({
-      'artistName': ['', [Validators.required]]
+      'artistName': ['', [Validators.required]],
+      'artistPicture': ['',Validators.required]
     });
   }
 
@@ -43,6 +50,7 @@ export class ArtistAddComponent {
     this.tempArtist = this.myForm.controls.artistName.value;
     
     this.artist.artistName = this.tempArtist;
+    this.artist.artistUrl = this.myForm.controls.artistPicture.value;
     
     this.artistService.ArtistAddItem(this.artist).subscribe(
       (result: Artist) => {

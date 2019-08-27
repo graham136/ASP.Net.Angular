@@ -8,6 +8,7 @@
 <table class='table' *ngIf="artists">
   <thead>
     <tr>
+      <th>Picture</th>
       <th>ArtistId</th>
       <th>ArtistName</th>
       <th>Action</th>
@@ -15,6 +16,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let artist of artists; let i = index">
+      <td><img src="{{ artist.artistUrl }}" ></td>
       <td>{{ artist.artistId }}</td>
       <td>{{ artist.artistName }}</td>
       <td>
@@ -38,3 +40,4 @@
         (click)="onAddClick()">
   Add a artist
 </button>
+<img src="{{ artist.artistUrl }}">

@@ -15,7 +15,7 @@ namespace BohemianRhapsody.Api.Models
         [Required]
         public int GenreId { get; set; }
         [Required]
-        public string Genre { get; set; }
+        public string GenreName { get; set; }
         [Required]
         public int ArtistId { get; set; }
         [Required]

@@ -35,6 +35,19 @@ export class AlbumHttpService {
   }
 
   /**
+   * Function to retrieve list of pre-added album pictures. Obviously this can be expanded.
+   * */
+  AlbumPictureList() {
+    this.endPoint = this.baseUrl + this.albumRoute + 'AlbumGetPictures';
+    return this.httpClient.get<string[]>(this.endPoint, { observe: 'response' })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  /**
    * Function to add an album to the api
    * @param _album The album to be added
    */
@@ -88,7 +101,7 @@ export class AlbumHttpService {
    */
   AlbumCanDelete(_albumId: number) {
     this.endPoint = this.baseUrl + this.albumRoute + 'AlbumCanDeleteItem?Id=' + _albumId;
-    return this.httpClient.delete<boolean>(this.endPoint, { observe: 'response' })
+    return this.httpClient.get<boolean>(this.endPoint, { observe: 'response' })
       .pipe(
         map(response => {
           if (response.status === 200) {

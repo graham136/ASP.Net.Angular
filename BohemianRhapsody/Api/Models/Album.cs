@@ -13,6 +13,8 @@ namespace BohemianRhapsody.Api.Models
         [Required]
         public string AlbumName { get; set; }
         [Required]
+        public string AlbumUrl { get; set; }
+        [Required]
         public int ArtistId { get; set; }
         [Required]
         public string ArtistName { get; set; }

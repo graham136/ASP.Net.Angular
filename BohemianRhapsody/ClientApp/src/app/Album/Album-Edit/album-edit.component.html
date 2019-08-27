@@ -13,15 +13,30 @@
       <ng-template [ngIf]="!myForm.controls.albumName.valid">
         Please enter a Album name?
       </ng-template>
-    </div>    
+    </div>
     <div class="form-group">
+      <label for="artistName">Artist Name:</label>
       <select formControlName="artistName" class="form-control">
-        <option  *ngFor="let artist of artists" [selected]="tempArtist.artistName">{{artist.artistName}}</option>
+        <option *ngFor="let artist of artists" [selected]="artist.artistName === tempArtist.artistName">{{artist.artistName}}</option>
       </select>
       <ng-template [ngIf]="!myForm.controls.artistName.valid">
         Please enter a Artist name?
       </ng-template>
     </div>
+    <div class="form-group">
+      <label for="albumPicture">Album Picture:</label>
+      <div>
+        <img src="{{selectedAlbum}}" />
+      </div>
+      <br />
+      <select formControlName="albumPicture" class="form-control" (change)="onUrlChange()" >
+        <option *ngFor="let picture of albumPictures" [value]="picture">{{ picture }}</option>
+      </select>
+      <ng-template [ngIf]="!myForm.controls.albumPicture.valid">
+        Please select an Album picture?
+      </ng-template>
+    </div>
+
     <button class="btn btn-primary"
             (click)="onBackClick()">
       Back to Albums

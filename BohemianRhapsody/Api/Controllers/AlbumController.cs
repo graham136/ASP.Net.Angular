@@ -128,14 +128,24 @@ namespace BohemianRhapsody.Api.Controllers
         public ActionResult AlbumCanDeleteItem(int Id)
         {
             var result = _sqlLiteData.AlbumCanDeleteItem(Id);
-            if (result != null)
+            return Ok(result);            
+        }
+
+        /// <summary>
+        /// Gets the list of local pictures to display. Obviously this can be expanded, to use urls etc.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public ActionResult AlbumGetPictures()
+        {
+            IEnumerable<string> result = new List<string>()
             {
-                return Ok(result);
-            }
-            else
-            {
-                return NotFound(result);
-            }
+                "assets/Album1.jpg",
+                "assets/Album2.jpg",
+                "assets/Album3.jpg",
+                "assets/Album4.jpg",
+            };
+            return Ok(result);
         }
 
 

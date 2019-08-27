@@ -15,7 +15,7 @@ import { GenreService } from 'Services/genre.service';
 export class GenreDeleteComponent {
   public genres: Genre[];
   public genre: Genre;
-  public deleteGenre: boolean;
+  public genreDelete: boolean;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     public genreService: GenreService,
@@ -23,7 +23,7 @@ export class GenreDeleteComponent {
 
     this.genreService.GenreCanDeleteItem(this.genreService.currentGenre.genreId).subscribe(
       (result: boolean) => {
-        this.deleteGenre = result;
+        this.genreDelete = result;
       });
 
     this.genre = this.genreService.currentGenre;

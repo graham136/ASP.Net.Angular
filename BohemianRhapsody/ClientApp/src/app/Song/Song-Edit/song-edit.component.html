@@ -1,0 +1,54 @@
+<h1>Song</h1>
+
+<p>Editing a selected song</p>
+
+<p *ngIf="!song"><em>Loading...</em></p>
+
+<div *ngIf="song">
+  <form [formGroup]="myForm">
+    <h2>Edit Song</h2>
+    <div class="form-group">
+      <label for="songName">Song Name:</label>
+      <input type="text" class="form-control" id="songName" formControlName="songName" value="{{ song.songName }}">
+      <ng-template [ngIf]="!myForm.controls.songName.valid">
+        Please enter a Song name?
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <label for="artistName">Artist Name:</label>
+      <select formControlName="artistName" class="form-control">
+        <option *ngFor="let artist of artists" [selected]="artist.artistName === tempArtist.artistName">{{artist.artistName}}</option>
+      </select>
+      <ng-template [ngIf]="!myForm.controls.artistName.valid">
+        Please enter a Artist name?
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <label for="albumName">Album Name:</label>
+      <select formControlName="albumName" class="form-control">
+        <option *ngFor="let album of albums" [selected]="album.albumName === tempAlbum.albumName">{{album.albumName}}</option>
+      </select>
+      <ng-template [ngIf]="!myForm.controls.albumName.valid">
+        Please enter a Album name?
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <label for="genreName">Genre Name:</label>
+      <select formControlName="genreName" class="form-control">
+        <option *ngFor="let genre of genres" [selected]="genre.genreName === tempGenre.genreName">{{genre.genreName}}</option>
+      </select>
+      <ng-template [ngIf]="!myForm.controls.genreName.valid">
+        Please enter a Genre name?
+      </ng-template>
+    </div>
+    <button class="btn btn-primary"
+            (click)="onBackClick()">
+      Back to Songs
+    </button>
+    <button class="btn btn-success"
+            (click)="onSaveClick()"
+            [disabled]="!myForm.valid">
+      Save to Songs
+    </button>
+  </form>
+</div>

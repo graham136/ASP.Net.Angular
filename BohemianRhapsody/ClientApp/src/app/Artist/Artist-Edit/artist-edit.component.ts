@@ -17,6 +17,8 @@ export class ArtistEditComponent {
   public artists: Artist[];
   public artist: Artist;
   public tempArtist: string;
+  public selectedArtist: string;
+  public artistPictures: string[];
 
   myForm = new FormGroup({});
 
@@ -26,10 +28,22 @@ export class ArtistEditComponent {
     public formBuilder: FormBuilder) {
 
     this.artist = artistService.currentArtist;
+    this.selectedArtist = this.artist.artistUrl;
+
+    artistService.GetAllArtistPictures().subscribe(
+      (result: string[]) => {
+        this.artistPictures = result;
+      });
 
     this.myForm = formBuilder.group({
-      'artistName': [this.artist.artistName, [Validators.required]]
+      'artistName': [this.artist.artistName, [Validators.required]],
+      'artistPicture': [this.artist.artistUrl,[Validators.required]]
     });
+  }
+
+  // On url change
+  onUrlChange() {
+    this.selectedArtist = this.myForm.controls.artistPicture.value;
   }
 
   // Function to route back to artist without save edited artist
@@ -42,6 +56,7 @@ export class ArtistEditComponent {
 
     this.tempArtist = this.myForm.controls.artistName.value;
     this.artist.artistName = this.tempArtist;
+    this.artist.artistUrl = this.myForm.controls.artistPicture.value;
     
     this.artistService.ArtistUpdateItem(this.artist).subscribe(
       (result: Artist) => {

@@ -14,6 +14,7 @@ export class ArtistService {
 
   public artists: Artist[];
   public currentArtist: Artist;
+  public artistPictures: string[];
 
   constructor(public artistHttpService: ArtistHttpService) {
   }
@@ -29,6 +30,21 @@ export class ArtistService {
             this.artists = artists;
           }
           return artists;
+        })
+      );
+  }
+
+  /**
+   *Function to retrive local album pictures.
+   * */
+  GetAllArtistPictures() {
+    return this.artistHttpService.ArtistPictureList()
+      .pipe(
+        map(artistPictures => {
+          if (artistPictures) {
+            this.artistPictures = artistPictures;
+          }
+          return artistPictures;
         })
       );
   }

@@ -14,6 +14,19 @@
         Please enter a Artist name?
       </ng-template>
     </div>
+    <div class="form-group">
+      <label for="artistPicture">Artist Picture:</label>
+      <div>
+        <img src="{{selectedArtist}}" />
+      </div>
+      <br />
+      <select formControlName="artistPicture" class="form-control" [(ngModel)]="selectedArtist">
+        <option *ngFor="let picture of artistPictures" [value]="picture">{{ picture }}</option>
+      </select>
+      <ng-template [ngIf]="!myForm.controls.artistPicture.valid">
+        Please select an Artist picture?
+      </ng-template>
+    </div>
     <button class="btn btn-primary"
             (click)="onBackClick()">
       Back to Artists

@@ -128,14 +128,7 @@ namespace BohemianRhapsody.Api.Controllers
         public ActionResult GenreCanDeleteItem(int Id)
         {
             var result = _sqlLiteData.GenreCanDeleteItem(Id);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return NotFound(result);
-            }
+            return Ok(result);
         }
 
 

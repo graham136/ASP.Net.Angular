@@ -7,8 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
 
 // Custom Page Imports
@@ -30,6 +28,12 @@ import { AlbumEditComponent } from './Album/Album-Edit/album-edit.component';
 import { AlbumAddComponent } from './Album/Album-Add/album-add.component';
 import { AlbumDeleteComponent } from './Album/Album-Delete/album-delete.component';
 
+import { SongListComponent } from './Song/song-list.component';
+import { SongViewComponent } from './Song/Song-View/song-view.component';
+import { SongEditComponent } from './Song/Song-Edit/song-edit.component';
+import { SongAddComponent } from './Song/Song-Add/song-add.component';
+import { SongDeleteComponent } from './Song/Song-Delete/song-delete.component';
+
 //Service Imports
 import { GenreService } from 'Services/genre.service';
 import { GenreHttpService } from '../Services/genrehttp.service';
@@ -37,16 +41,15 @@ import { ArtistService } from 'Services/artist.service';
 import { ArtistHttpService } from '../Services/artisthttp.service';
 import { AlbumService } from 'Services/album.service';
 import { AlbumHttpService } from '../Services/albumhttp.service';
-
+import { SongService } from 'Services/song.service';
+import { SongHttpService } from '../Services/songhttp.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
+    HomeComponent,   
     GenreListComponent,
     GenreViewComponent,
     GenreEditComponent,
@@ -61,7 +64,13 @@ import { AlbumHttpService } from '../Services/albumhttp.service';
     AlbumViewComponent,
     AlbumEditComponent,
     AlbumAddComponent,
-    AlbumDeleteComponent
+    AlbumDeleteComponent,
+    SongListComponent,
+    SongViewComponent,
+    SongEditComponent,
+    SongAddComponent,
+    SongDeleteComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -69,9 +78,7 @@ import { AlbumHttpService } from '../Services/albumhttp.service';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' },     
       { path: 'genre-list', component: GenreListComponent },
       { path: 'genre-view', component: GenreViewComponent },
       { path: 'genre-edit', component: GenreEditComponent },
@@ -87,9 +94,14 @@ import { AlbumHttpService } from '../Services/albumhttp.service';
       { path: 'album-edit', component: AlbumEditComponent },
       { path: 'album-add', component: AlbumAddComponent },
       { path: 'album-delete', component: AlbumDeleteComponent },
+      { path: 'song-list', component: SongListComponent },
+      { path: 'song-view', component: SongViewComponent },
+      { path: 'song-edit', component: SongEditComponent },
+      { path: 'song-add', component: SongAddComponent },
+      { path: 'song-delete', component: SongDeleteComponent },
     ])
   ],
-  providers: [GenreService, GenreHttpService, ArtistService, ArtistHttpService, AlbumService, AlbumHttpService],
+  providers: [GenreService, GenreHttpService, ArtistService, ArtistHttpService, AlbumService, AlbumHttpService, , SongService, SongHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

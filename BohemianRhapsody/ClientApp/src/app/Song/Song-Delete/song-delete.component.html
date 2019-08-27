@@ -1,0 +1,25 @@
+<h1>Song</h1>
+
+<div *ngIf="!deleteSong">
+  <p>Cannot delete song {{song.songName}} as it is still in use in a song.</p>
+  <button class="btn btn-primary"
+          (click)="onBackClick()">
+    Back to Songs
+  </button>
+</div>
+
+<div *ngIf="deleteSong">
+  <h2>Delete Song?:</h2>
+  <div class="form-group">
+    <label for="songName">Song Name:</label>
+    <input type="text" class="form-control" id="songName" value="{{ song.songName }}" disabled>
+  </div>
+  <button class="btn btn-primary"
+          (click)="onBackClick()">
+    Back to Songs
+  </button>
+  <button class="btn btn-danger"
+          (click)="onDeleteClick()">
+    Delete Song
+  </button>
+</div>

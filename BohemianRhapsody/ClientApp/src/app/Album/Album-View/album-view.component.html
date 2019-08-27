@@ -6,14 +6,61 @@
 <p *ngIf="!album"><em>Loading...</em></p>
 
 <div *ngIf="album">
-  <h2>View Album</h2>
+  <div>
+    <img src="{{album.albumUrl}}"/>
+  </div>
   <div class="form-group">
     <label for="albumName">Album Name:</label>
     <input type="text" class="form-control" id="albumName" value="{{ album.albumName }}" disabled>
   </div>
   <div class="form-group">
-    <label for="albumName">Album Name:</label>
+    <label for="albumName">Artist Name:</label>
     <input type="text" class="form-control" id="albumName" value="{{ album.artistName }}" disabled>
+  </div>
+
+  <div class="table-responsive" *ngIf="songs">
+    <h2>Songs</h2>
+    <table class='table' >
+      <thead>
+        <tr>
+          <th>SongId</th>
+          <th>SongName</th>
+          <th>ArtistId</th>
+          <th>ArtistName</th>
+          <th>AlbumId</th>
+          <th>AlbumName</th>
+          <th>GenreId</th>
+          <th>GenreName</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of songs; let i = index">
+          <td>{{ song.songId }}</td>
+          <td>{{ song.songName }}</td>
+          <td>{{ song.artistId }}</td>
+          <td>{{ song.artistName }}</td>
+          <td>{{ song.albumId }}</td>
+          <td>{{ song.albumName }}</td>
+          <td>{{ song.genreId }}</td>
+          <td>{{ song.genreName }}</td>
+          <td>
+            <button class="btn btn-info"
+                    (click)="onViewClick(i)">
+              View
+            </button>
+            <button class="btn btn-warning"
+                    (click)="onEditClick(i)">
+              Edit
+            </button>
+            <button class="btn btn-danger"
+                    (click)="onDeleteClick(i)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <button class="btn btn-primary"
           (click)="onBackClick()">

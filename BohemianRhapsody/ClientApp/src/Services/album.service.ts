@@ -13,6 +13,7 @@ import { Album } from 'Models/Album';
 export class AlbumService {
 
   public albums: Album[];
+  public albumPictures: string[];
   public currentAlbum: Album;
 
   constructor(public albumHttpService: AlbumHttpService) {
@@ -29,6 +30,21 @@ export class AlbumService {
             this.albums = albums;
           }
           return albums;
+        })
+      );
+  }
+
+  /**
+   *Function to retrive local album pictures.
+   * */
+  GetAllAlbumPictures() {
+    return this.albumHttpService.AlbumPictureList()
+      .pipe(
+        map(albumPictures => {
+          if (albumPictures) {
+            this.albumPictures = albumPictures;
+          }
+          return albumPictures;
         })
       );
   }
