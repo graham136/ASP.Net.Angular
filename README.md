@@ -29,4 +29,4 @@
 <p>4. Please type in "ng test" to run the angular front end test in Karma</p>
 
 <H2>How to run</H2>
-p>1. Please open bohemianRhapsody.sln in visual studio 2017 or 2019 and run.</p>
+<p>1. Please open bohemianRhapsody.sln in visual studio 2017 or 2019 and run.</p>
